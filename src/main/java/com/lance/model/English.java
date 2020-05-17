@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 public class English {
     @JSONField(name = "Id")
-    String id;
+    int id;
     @JSONField(name = "Topic")
     String topic;//题目
     @JSONField(name = "Answer")
@@ -13,11 +13,11 @@ public class English {
     @JSONField(name = "Prompt")
     String prompt;//提示
 
-    public String getId () {
+    public int getId () {
         return id;
     }
 
-    public void setId (String id) {
+    public void setId (int id) {
         this.id = id;
     }
 
@@ -44,7 +44,14 @@ public class English {
     public void setPrompt (String prompt) {
         this.prompt = prompt;
     }
+    public English(int id,String topic,String answer,String prompt){
+        super();
+        this.id = id;
+        this.topic = topic;
+        this.answer = answer;
+        this.prompt = prompt;
 
+    }
     @Override
     public String toString () {
         return JSONObject.toJSONString(this);

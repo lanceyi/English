@@ -1,23 +1,27 @@
 package com.lance.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lance.model.English;
-import com.lance.model.English_List;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+
+import javax.servlet.http.HttpServlet;
+import java.util.ArrayList;
 import java.util.List;
-
+@Controller
 public class JsonController {
-    English english;
+    private List<English> listOfEnglish = new ArrayList<English>();
+    @RequestMapping("/success")
     //存
     public void Save(){
-      english = new English();
-      english.setId("1");
-      english.setTopic("the is ____ apple");
-      english.setAnswer("red");
-      english.setPrompt("这是红苹果");
 
+    listOfEnglish.add(new English(1,"This is ____ apple","red","这是红苹果"));
     }
     //读
-    public void Read(){
+    public void Read(Model model){
 
     }
 }
+
