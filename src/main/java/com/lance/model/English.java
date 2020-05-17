@@ -2,7 +2,9 @@ package com.lance.model;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.Data;
 
+@Data
 public class English {
     @JSONField(name = "Id")
     int id;
@@ -13,37 +15,7 @@ public class English {
     @JSONField(name = "Prompt")
     String prompt;//提示
 
-    public int getId () {
-        return id;
-    }
 
-    public void setId (int id) {
-        this.id = id;
-    }
-
-    public String getTopic () {
-        return topic;
-    }
-
-    public void setTopic (String topic) {
-        this.topic = topic;
-    }
-
-    public String getAnswer () {
-        return answer;
-    }
-
-    public void setAnswer (String answer) {
-        this.answer = answer;
-    }
-
-    public String getPrompt () {
-        return prompt;
-    }
-
-    public void setPrompt (String prompt) {
-        this.prompt = prompt;
-    }
     public English(int id,String topic,String answer,String prompt){
         super();
         this.id = id;
