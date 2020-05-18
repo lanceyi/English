@@ -12,7 +12,7 @@ import java.util.List;
 public class JsonController {
 
     //存
-    public void  Save() throws Exception {
+    public void  Save (English  english) throws Exception {
        /* List<English> english_list =new ArrayList<English>();
         english_list.add(new English(1,"This is ____ apple","red","这是红苹果"));
         english_list.add(new English(2,"This is ____ apple","red","这是红苹果"));
@@ -24,11 +24,8 @@ public class JsonController {
             e.printStackTrace();
         }*/
         List<English> english_list =new ArrayList<>();
-
         ObjectMapper  mapper =new ObjectMapper();
-        english_list.add(new English(1,"the is a ____ apple ","red","这是一个红苹果")) ;
-        english_list.add(new English(2,"the is a ____ apple ","red","这是一个红苹果")) ;
-        english_list.add(new English(3,"the is a ____ apple ","red","这是一个红苹果")) ;
+        english_list.add(english) ;
         String jsonOutput= JsonUtil.obj2String(english_list);
         mapper.writeValue(new File("src\\main\\resources\\english.json"),jsonOutput);
 

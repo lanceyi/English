@@ -2,7 +2,10 @@ package com.lance.dao;
 
 import com.lance.model.English;
 
-public interface EnglishDao {
-    English getId(int id);
+import java.util.ArrayList;
 
+public interface EnglishDao {
+    English findById(int id);
+
+    void Save(English english);
 }

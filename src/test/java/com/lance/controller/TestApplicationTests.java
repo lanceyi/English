@@ -1,9 +1,8 @@
 package com.lance.controller;
 
+import com.lance.model.English;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.io.IOException;
 
 @SpringBootTest
 class TestApplicationTests {
@@ -16,7 +15,7 @@ class TestApplicationTests {
     void Save(){
         JsonController jsonController = new JsonController();
         try {
-            jsonController.Save();
+            jsonController.Save(new English(3,"xxx","xxx","xxx"));
         } catch (Exception e) {
             e.printStackTrace();
         }
