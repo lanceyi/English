@@ -1,7 +1,7 @@
-package com.lance.dao;
+package com.lance.service;
 
 import com.lance.model.English;
 
-public interface EnglishDao {
+public interface EnglishService {
     int add(English english);
 }
