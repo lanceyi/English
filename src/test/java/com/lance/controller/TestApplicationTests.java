@@ -2,6 +2,7 @@ package com.lance.controller;
 
 import com.lance.dao.impl.English_ListDaoImpl;
 import com.lance.model.English;
+import com.lance.service.impl.EnglishServiceImpl;
 import com.lance.util.JsonController;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,13 +25,9 @@ class TestApplicationTests {
         }
     }
     @Test
-    void Read(){
-        JsonController jsonController = new JsonController();
-        try {
-            jsonController.Read();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void add() {
+        EnglishServiceImpl englishService = new EnglishServiceImpl();
+        englishService.add(new English(3,"xxx","xxx","xxx"));
     }
     @Test
     void getAll(){
