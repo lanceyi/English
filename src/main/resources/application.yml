@@ -1,0 +1,34 @@
+spring:
+  # 数据库连接设置
+  datasource:
+    # 配置h2数据库的连接地址
+    url: jdbc:h2:file:./data/data;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    # 表明使用的数据库平台是h2
+    platform: h2
+    # 配置数据库用户名
+    username: root
+    # 配置数据库密码
+    password: 123456
+    # 配置JDBC Driver
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      # 设置ddl模式
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+    # 启用SQL语句的日志记录
+    show-sql: true
+logging:
+  level:
+    root: debug
+
+# Mybatis
+mybatis:
+  type-aliases-package: com.lance.model
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml

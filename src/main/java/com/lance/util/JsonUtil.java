@@ -22,7 +22,7 @@ public class JsonUtil {
             return null;
         }
     }
-    /*将对象转为json,并格式化输出*/
+    /** 将对象转为json,并格式化输出*/
     public static <T> String obj2StringPretty(T obj){
         if(obj == null){
             return null;
@@ -34,7 +34,7 @@ public class JsonUtil {
             return null;
         }
     }
-    /*将json转Java对象*/
+    /** 将json转Java对象 */
     public static <T> T string2Obj(String str, Class<T> clazz){
         if(StringUtils.isEmpty(str) || clazz == null){
             return null;

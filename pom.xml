@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lance</groupId>
-    <artifactId>test</artifactId>
+    <artifactId>English</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>test</name>
+    <name>English</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <scope>English</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
@@ -51,7 +51,33 @@
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
         </dependency>
+        <!--H2 数据库-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--        mybatis-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.0.0</version>
+        </dependency>
     </dependencies>
 
 
