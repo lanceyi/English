@@ -5,7 +5,7 @@
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="CHAPTER" property="chapter" jdbcType="VARCHAR" />
         <result column="topicType" property="topicType" jdbcType="VARCHAR" />
-        <result column="TAG" property="tag" javaType="VARCHAR"/>
+        <result column="TAG" property="tag" jdbcType="VARCHAR"/>
         <result column="TOPIC" property="topic" jdbcType="VARCHAR" />
         <result column="ANSWER" property="answer" jdbcType="VARCHAR" />
         <result column="PROMPT" property="prompt" jdbcType="VARCHAR" />
