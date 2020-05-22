@@ -1,12 +1,14 @@
 package com.lance.mapper;
 
 import com.lance.entity.QuestionEntity;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * @author youth
  */
+@Mapper
 public interface QuestionMapper {
     /**
      * 获取所有数据
