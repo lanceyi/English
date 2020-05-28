@@ -11,4 +11,11 @@ public interface QuestionsService {
      * @return List<QuestionEntity>
      */
     List<QuestionEntity> getAll();
+
+    /**
+     * 获取单个数据
+     * @param id
+     * @return QuestionEntity
+     */
+    QuestionEntity getOne(long id);
 }

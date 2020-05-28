@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>List</title>
 </head>
 <body>
-${session.user.name}
+数据信息
+<p th:text="${one}"></p>
+<table border="1">
+    <tr th:each="i : ${list}">
+        <td th:text="${i.id}"></td>
+        <td th:text="${i.chapter}"></td>
+        <td th:text="${i.topicType}"></td>
+        <td th:text="${i.tag}"></td>
+        <td th:text="${i.topic}"></td>
+        <td th:text="${i.answer}"></td>
+        <td th:text="${i.prompt}"></td>
+    </tr>
+</table>
 </body>
 </html>

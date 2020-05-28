@@ -1,15 +1,14 @@
-package com.lance.mapper;
+package com.lance.dao;
 
 import com.lance.entity.QuestionEntity;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * @author youth
  */
-@Mapper
-public interface QuestionMapper {
+public interface QuestionDao {
     /**
      * 获取所有数据
      * @return List<QuestionEntity>
