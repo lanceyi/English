@@ -11,18 +11,19 @@ import java.util.List;
 /**
  * @author Aagmix
  */
-@Service("QuestionsService")
+@Service("QuestionsServiceImpl")
 public class QuestionsServiceImpl implements QuestionsService {
 
-    private QuestionDao questionMapper;
+    @Resource
+    private QuestionDao questionDao;
 
     @Override
     public List<QuestionEntity> getAll() {
-        return questionMapper.getAll();
+        return questionDao.getAll();
     }
 
     @Override
     public QuestionEntity getOne(long id) {
-        return questionMapper.getOne(id);
+        return questionDao.getOne(id);
     }
 }

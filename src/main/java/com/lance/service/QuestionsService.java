@@ -1,9 +1,11 @@
 package com.lance.service;
 
 import com.lance.entity.QuestionEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service("QuestionsService")
 public interface QuestionsService {
 
     /**
