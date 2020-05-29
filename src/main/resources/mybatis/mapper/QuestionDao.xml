@@ -11,7 +11,7 @@
         <result column="PROMPT" property="prompt" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
-        id, CHAPTER, topicType, TAG, TOPIC, ANSWER, PROMPT
+        id, chapter, "topicType", tag, topic, answer, prompt
     </sql>
 
     <select id="getAll" resultMap="BaseResultMap"  >

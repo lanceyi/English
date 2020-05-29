@@ -24,9 +24,7 @@ spring:
     # 启用SQL语句的日志记录
     show-sql: true
 logging:
-  level:
-    root: debug
-
+  config: classpath:log4j2.xml
 # Mybatis
 mybatis:
   type-aliases-package: com.lance.model
