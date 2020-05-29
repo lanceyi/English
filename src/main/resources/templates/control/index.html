@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+</head>
+<body>
+数据信息
+<a href="/control/add">添加</a>
+<table border="1">
+    <tr>
+        <td>ID</td>
+        <td>章节</td>
+        <td>题型</td>
+        <td>标签</td>
+        <td>题目</td>
+        <td>答案</td>
+        <td>提示</td>
+        <td>操作</td>
+    </tr>
+    <tr th:each="i : ${list}">
+        <td th:text="${i.id}"></td>
+        <td th:text="${i.chapter}"></td>
+        <td th:text="${i.topicType}"></td>
+        <td th:text="${i.tag}"></td>
+        <td th:text="${i.topic}"></td>
+        <td th:text="${i.answer}"></td>
+        <td th:text="${i.prompt}"></td>
+        <td>
+            <a th:href="'/control/delect?id=' + ${i.id}">删除</a>
+            <a th:href="'/control/update?id=' + ${i.id}">修改</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
