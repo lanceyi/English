@@ -32,7 +32,7 @@ public interface QuestionDao {
 
     /**
      * 改
-     * @param question
+     * @param id
      */
     void update(QuestionEntity question);
 

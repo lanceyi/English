@@ -5,6 +5,23 @@
     <title>List</title>
 </head>
 <body>
+<form th:action="@{/control/update}" th:object="${user}"  method="post">
+    <input type="hidden" name="id" th:value="*{id}" />
+    <label>章节</label>
+    <input type="text" name="chapter" th:value="*{chapter}" />
+    <label>题型</label>
+    <input type="text" name="topicType" th:value="*{topicType}" />
+    <label>标签</label>
+    <input type="text" name="tag" th:value="*{tag}" />
+    <label>题目</label>
+    <input type="text" name="topic" th:value="*{topic}" />
+    <label>答案</label>
+    <input type="text" name="answer" th:value="*{answer}" />
+    <label>提示</label>
+    <input type="text" name="prompt" th:value="*{prompt}" />
+    <input type="submit" value="Submit"/>
+    <input type="reset" value="Reset"/>
+</form>
 <a href="/control/index">返回控制面板</a>
 </body>
 </html>

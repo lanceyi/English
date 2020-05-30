@@ -20,7 +20,7 @@
         FROM "Questions"
     </select>
 
-    <select id="getOne" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+    <select id="getOne" parameterType="java.lang.Long" resultMap="BaseResultMap" >
         SELECT
         <include refid="Base_Column_List" />
         FROM "Questions"
@@ -30,9 +30,9 @@
     <insert id="insert" parameterType="com.lance.entity.QuestionEntity" >
         INSERT INTO
         "Questions"
-        (id, CHAPTER, "topicType", TAG, TOPIC, ANSWER, PROMPT)
+        (CHAPTER, "topicType", TAG, TOPIC, ANSWER, PROMPT)
         VALUES
-        (#{id}, #{chapter}, #{topicType}, #{tag}, #{topic}, #{answer}, #{prompt})
+        (#{chapter}, #{topicType}, #{tag}, #{topic}, #{answer}, #{prompt})
     </insert>
 
     <update id="update" parameterType="com.lance.entity.QuestionEntity" >

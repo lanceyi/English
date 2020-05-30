@@ -3,13 +3,13 @@ package com.lance.controller;
 import com.lance.entity.QuestionEntity;
 import com.lance.service.impl.QuestionsServiceImpl;
 import lombok.extern.log4j.Log4j2;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.persistence.Id;
 import java.util.List;
 
 /**
@@ -30,25 +30,45 @@ public class QuestionController {
         modelAndView.addObject("list", list);
         return modelAndView;
     }
-    @GetMapping(value = "add")
-    public String add() {
-        return "control/add";
+
+    @RequestMapping("/toAdd")
+    public String toAdd(){
+        return "/control/add";
     }
 
-    @PostMapping(value = "add")
-    public ModelAndView postAdd() {
-        ModelAndView modelAndView = new ModelAndView("control/index");
+    @RequestMapping("/toUpdate")
+    public ModelAndView toUpdate(Long id){
+        ModelAndView modelAndView = new ModelAndView("/control/update");
+        modelAndView.addObject("user", questionsService.getOne(id));
         return modelAndView;
     }
 
-    @GetMapping(value = "update")
-    public String update() {
-        return "control/update";
+    @PostMapping(value = "/add")
+    public ModelAndView add(QuestionEntity question) {
+        questionsService.insert(question);
+        ModelAndView modelAndView = new ModelAndView("control/index");
+        List<QuestionEntity> list = questionsService.getAll();
+        modelAndView.addObject("list", list);
+        return modelAndView;
     }
 
 
-    @GetMapping(value = "delete")
-    public String delect() {
-        return "control/delete";
+    @PostMapping(value = "/update")
+    public ModelAndView update(QuestionEntity question ) {
+        questionsService.update(question);
+        ModelAndView modelAndView = new ModelAndView("control/index");
+        List<QuestionEntity> list = questionsService.getAll();
+        modelAndView.addObject("list", list);
+        return modelAndView;
+    }
+
+
+    @GetMapping(value = "/delete")
+    public ModelAndView delete( Long id) {
+        questionsService.delete(id);
+        ModelAndView modelAndView = new ModelAndView("control/index");
+        List<QuestionEntity> list = questionsService.getAll();
+        modelAndView.addObject("list", list);
+        return modelAndView;
     }
 }

@@ -8,7 +8,7 @@
 </head>
 <body>
 数据信息
-<a href="/control/add">添加</a>
+<a href="/control/toAdd" th:href="@{/control/toAdd}">添加</a>
 <table border="1">
     <tr>
         <td>ID</td>
@@ -29,8 +29,8 @@
         <td th:text="${i.answer}"></td>
         <td th:text="${i.prompt}"></td>
         <td>
-            <a th:href="'/control/delect?id=' + ${i.id}">删除</a>
-            <a th:href="'/control/update?id=' + ${i.id}">修改</a>
+            <a th:href="@{/control/delete(id=${i.id})}">删除</a>
+            <a th:href="@{/control/toUpdate(id=${i.id})}">修改</a>
         </td>
     </tr>
 </table>

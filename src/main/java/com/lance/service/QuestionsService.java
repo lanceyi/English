@@ -20,4 +20,23 @@ public interface QuestionsService {
      * @return QuestionEntity
      */
     QuestionEntity getOne(long id);
+
+    /**
+     * 添加数据
+     * @param
+     * question
+     */
+    void insert(QuestionEntity question);
+
+    /**
+     * 修改数据
+     * @param id
+     */
+    void update(QuestionEntity question);
+
+    /**
+     * 删除数据
+     * @param id
+     */
+    void delete(Long id);
 }

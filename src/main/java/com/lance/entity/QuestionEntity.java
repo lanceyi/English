@@ -16,7 +16,6 @@ public class QuestionEntity {
     @GeneratedValue
     @Column(name = "ID")
     private Integer id;
-
     @Column(name = "CHAPTER")
     private String chapter;
     @Column(name = "topicType")

@@ -26,4 +26,20 @@ public class QuestionsServiceImpl implements QuestionsService {
     public QuestionEntity getOne(long id) {
         return questionDao.getOne(id);
     }
+
+    @Override
+    public void insert (QuestionEntity question) {
+        questionDao.insert(question);
+    }
+
+
+    @Override
+    public void update (QuestionEntity question) {
+        questionDao.update(question);
+    }
+
+    @Override
+    public void delete (Long id) {
+    questionDao.delete(id);
+    }
 }
