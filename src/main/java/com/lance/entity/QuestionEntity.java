@@ -1,6 +1,7 @@
 package com.lance.entity;
 
 
+import com.lance.dto.QuestionDto;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -28,4 +29,14 @@ public class QuestionEntity {
     private String answer;
     @Column(name = "PROMPT")
     private String prompt;
+
+    public QuestionEntity(QuestionDto questionDto) {
+        this.id = questionDto.getId();
+        this.chapter = questionDto.getChapter();
+        this.topicType = questionDto.getTopicType();
+        this.tag = questionDto.getTag();
+        this.topic = questionDto.getTopic();
+        this.answer = questionDto.getAnswer();
+        this.prompt = questionDto.getPrompt();
+    }
 }
