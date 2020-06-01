@@ -24,12 +24,12 @@ public class QuestionController {
     @Resource
     private QuestionsServiceImpl questionsService;
 
-    private static final String CONTROL = "control/";
+    private static final String CONTROL = "/control/";
     private static final String INDEX = CONTROL + "index";
 
     @GetMapping(value = "index")
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView(INDEX);
+        ModelAndView modelAndView = new ModelAndView("/control/index");
         List<QuestionEntity> list = questionsService.getAll();
         modelAndView.addObject("list", list);
         return modelAndView;
@@ -42,7 +42,7 @@ public class QuestionController {
 
     @GetMapping("/toUpdate")
     public ModelAndView toUpdate(Long id){
-        ModelAndView modelAndView = new ModelAndView( CONTROL +"update");
+        ModelAndView modelAndView = new ModelAndView(CONTROL + "update");
         modelAndView.addObject("question", questionsService.getOne(id));
         return modelAndView;
     }

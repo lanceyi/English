@@ -9,7 +9,6 @@ import javax.persistence.*;
 /**
  * @author Aagmix
  */
-@Data
 @Entity
 @Table(name = "Questions")
 public class QuestionEntity {
@@ -30,7 +29,7 @@ public class QuestionEntity {
     @Column(name = "PROMPT")
     private String prompt;
 
-    public QuestionEntity () {
+    public QuestionEntity() {
     }
 
     public QuestionEntity(QuestionDto questionDto) {
