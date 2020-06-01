@@ -24,7 +24,7 @@ public class QuestionController {
     @Resource
     private QuestionsServiceImpl questionsService;
 
-    private static final String CONTROL = "/control/";
+    private static final String CONTROL = "control/";
     private static final String INDEX = CONTROL + "index";
 
     @GetMapping(value = "index")
@@ -42,8 +42,8 @@ public class QuestionController {
 
     @GetMapping("/toUpdate")
     public ModelAndView toUpdate(Long id){
-        ModelAndView modelAndView = new ModelAndView(CONTROL + "update");
-        modelAndView.addObject("user", questionsService.getOne(id));
+        ModelAndView modelAndView = new ModelAndView( CONTROL +"update");
+        modelAndView.addObject("question", questionsService.getOne(id));
         return modelAndView;
     }
 
