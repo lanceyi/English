@@ -23,6 +23,9 @@ spring:
         format_sql: true
     # 启用SQL语句的日志记录
     show-sql: true
+  # Thymeleaf
+  thymeleaf:
+    cache: false
 logging:
   config: classpath:log4j2.xml
 # Mybatis

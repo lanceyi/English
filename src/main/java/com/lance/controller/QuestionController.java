@@ -24,12 +24,12 @@ public class QuestionController {
     @Resource
     private QuestionsServiceImpl questionsService;
 
-    private static final String CONTROL = "/control/";
+    private static final String CONTROL = "control/";
     private static final String INDEX = CONTROL + "index";
 
     @GetMapping(value = "index")
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("/control/index");
+        ModelAndView modelAndView = new ModelAndView(INDEX);
         List<QuestionEntity> list = questionsService.getAll();
         modelAndView.addObject("list", list);
         return modelAndView;

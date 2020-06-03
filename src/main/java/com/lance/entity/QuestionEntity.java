@@ -9,6 +9,7 @@ import javax.persistence.*;
 /**
  * @author Aagmix
  */
+@Data
 @Entity
 @Table(name = "Questions")
 public class QuestionEntity {

@@ -5,6 +5,20 @@
     <title>测验</title>
 </head>
 <body>
-<p th:text="${question}"></p>
+<p th:text="${question.topic}"></p>
+<input type="radio" name="radio" value="123123">
+<input type="radio" name="radio" value="赛噶赛2">
+<input type="radio" name="radio" value="3123">
+<input type="radio" name="radio" value="415">
+<datalist id="TopicTypeList">
+
+</datalist>
+<select id="TopicType"  list="TopicTypeList">
+    <option th:value="${i.getTopicType()}" th:each="i : ${topicTypeList}">
+        <span th:text="${i.topicType}"></span>
+    </option>
+</select>
+<button th:onclick="window.open('./index?id=' + ([[${question.id}]] + 1), '_self')">下一题</button>
+<button th:onclick="window.open('./index?id=' + ([[${question.id}]] - 1), '_self')">上一题</button>
 </body>
 </html>

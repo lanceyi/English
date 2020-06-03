@@ -6,7 +6,9 @@ import com.lance.service.QuestionsService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Aagmix
@@ -41,5 +43,30 @@ public class QuestionsServiceImpl implements QuestionsService {
     @Override
     public void delete (Long id) {
     questionDao.delete(id);
+    }
+
+    @Override
+    public List<QuestionEntity> getRand(int sum) {
+        return questionDao.getRand(sum);
+    }
+
+    @Override
+    public List<QuestionEntity> getAllTopicType() {
+        return questionDao.getAllTopicType();
+    }
+
+    @Override
+    public List<QuestionEntity> getRandAnswerInTopicType(int sum, String topicType) {
+        return questionDao.getRandAnswerInTopicType(sum, topicType);
+    }
+
+    @Override
+    public QuestionEntity getOneInTopicType(Long id, String topicType) {
+        return questionDao.getOneInTopicType(id, topicType);
+    }
+
+    @Override
+    public List<QuestionEntity> getRandInTopicType(int sum, String topicType) {
+        return getRandAnswerInTopicType(sum, topicType);
     }
 }

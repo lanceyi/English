@@ -26,6 +26,39 @@
         FROM "Questions"
         WHERE id = #{id}
     </select>
+    <select id="getOneInTopicType" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM "Questions"
+        WHERE id = #{id} AND "topicType" = #{topicType}
+    </select>
+
+    <select id="getAllTopicType" resultMap="BaseResultMap"  >
+        SELECT DISTINCT "topicType" FROM "Questions";
+    </select>
+
+    <select id="getRand" parameterType="Integer" resultMap="BaseResultMap"  >
+        SELECT * FROM "Questions" WHERE ID >= ((SELECT MAX(ID) FROM "Questions")-(SELECT MIN(ID) FROM "Questions")) * RAND() + (SELECT MIN(ID) FROM "Questions") LIMIT #{num};
+    </select>
+
+    <select id="getRandInTopicType" resultMap="BaseResultMap"  >
+        select * from "Questions" where "topicType" = #{topicType} and ANSWER in (
+            SELECT ANSWER FROM "Questions"
+            WHERE ID >= ((SELECT MAX(ID) FROM "Questions") - (SELECT MIN(ID) FROM "Questions")) * RAND() + (SELECT MIN(ID) FROM "Questions")
+            )  LIMIT #{sum};
+    </select>
+
+    <select id="getRandAnswer" parameterType="Integer" resultMap="BaseResultMap"  >
+        SELECT ANSWER FROM "Questions"
+        WHERE ID >= ((SELECT MAX(ID) FROM "Questions") - (SELECT MIN(ID) FROM "Questions")) * RAND() + (SELECT MIN(ID) FROM "Questions")  LIMIT #{num}
+    </select>
+
+    <select id="getRandAnswerInTopicType" resultMap="BaseResultMap"  >
+        select ANSWER from "Questions" where "topicType" = #{topicType} and ANSWER in (
+            SELECT ANSWER FROM "Questions"
+            WHERE ID >= ((SELECT MAX(ID) FROM "Questions") - (SELECT MIN(ID) FROM "Questions")) * RAND() + (SELECT MIN(ID) FROM "Questions")
+            )  LIMIT #{num};
+    </select>
 
     <insert id="insert" parameterType="com.lance.entity.QuestionEntity" >
         INSERT INTO
