@@ -31,6 +31,10 @@
 <datalist id="TopicTypeList">
 
 </datalist>
+<select id="rand"  list="randList">
+    <option value="true">随机</option>
+    <option value="false">顺序</option>
+</select>
 <select id="TopicType"  list="TopicTypeList">
     <option th:value="${i.getTopicType()}" th:each="i : ${topicTypeList}">
         <span th:text="${i.topicType}"></span>
