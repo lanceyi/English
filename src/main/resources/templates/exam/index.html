@@ -6,21 +6,28 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         var answer = [[${question.answer}]];
-        var x =document.getElementsByName('topicType');
+        function f() {
+        if (frm.topicType.value==answer){
+            alert("正确");
+            return false;
+        }else {
+            alert("错误");
+            return false;
+        }
+        }
         /*]]>*/
     </script>
 </head>
 
 <body>
-<p th:text="${question.topic}"></p>
-<form>
+<p th:text="${question.topic}" ></p>
+<form action="" method="post" onsubmit="return  f(this);" th:name="frm">
     <p th:each="i:${answerList}">
-    <input type="radio" name="topicType" th:value="${i}"  >
+    <input type="radio" name="topicType"  th:value="${i}"  >
         <span th:text="${i}"></span>
     </p>
+    <input th:type="submit" th:value="提交">
 </form>
-
-
 <datalist id="TopicTypeList">
 
 </datalist>
