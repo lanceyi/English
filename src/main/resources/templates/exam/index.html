@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>测验</title>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var answer = [[${question.answer}]];
+        var x =document.getElementsByName('topicType');
+        /*]]>*/
+    </script>
 </head>
+
 <body>
 <p th:text="${question.topic}"></p>
-<input type="radio" name="radio" value="123123">
-<input type="radio" name="radio" value="赛噶赛2">
-<input type="radio" name="radio" value="3123">
-<input type="radio" name="radio" value="415">
+<form>
+    <p th:each="i:${answerList}">
+    <input type="radio" name="topicType" th:value="${i}"  >
+        <span th:text="${i}"></span>
+    </p>
+</form>
+
+
 <datalist id="TopicTypeList">
 
 </datalist>

@@ -9,18 +9,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author youth
  */
 @Controller
-@RequestMapping(value = "exam")
+@RequestMapping(value = "/exam")
 public class ExamController {
     @Resource
     private QuestionsServiceImpl questionsService;
 
-    private static final String EXAM = "/exam/";
+    private static final String EXAM = "exam/";
     private static final String INDEX = EXAM + "index";
 
     @GetMapping(value = "index")
@@ -40,9 +42,12 @@ public class ExamController {
             }
             List<QuestionEntity> type = questionsService.getAllTopicType();
             List<QuestionEntity> answer = questionsService.getRandAnswerInTopicType(3, question.getTopicType());
+            List<String> answerList =answer.stream().map(QuestionEntity::getAnswer).collect(Collectors.toList());
+            answerList.add(question.getAnswer());
+            Collections.shuffle(answerList);
             modelAndView.addObject("question", question);
             modelAndView.addObject("topicTypeList", type);
-            modelAndView.addObject("answer", answer);
+            modelAndView.addObject("answerList", answerList);
         } else {
             List<QuestionEntity> question;
             if (!"".equals(topicType))
@@ -53,9 +58,13 @@ public class ExamController {
             }
             List<QuestionEntity> type = questionsService.getAllTopicType();
             List<QuestionEntity> answer = questionsService.getRandAnswerInTopicType(3, question.get(0).getTopicType());
+            List<String> answerList =answer.stream().map(QuestionEntity::getAnswer).collect(Collectors.toList());
+            List<String> answerOne = question.stream().map(QuestionEntity::getAnswer).collect(Collectors.toList());
+            answerList.add(String.valueOf(answerOne));
+            Collections.shuffle(answerList);
             modelAndView.addObject("question", question);
             modelAndView.addObject("topicTypeList", type);
-            modelAndView.addObject("answer", answer);
+            modelAndView.addObject("answerList", answerList);
         }
 
         return modelAndView;
