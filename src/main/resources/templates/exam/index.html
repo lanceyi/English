@@ -6,8 +6,13 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         var answer = [[${question.answer}]];
+        var prompt =[[${question.prompt}]];
+        function ts() {
+            document.getElementById("prompt").innerText=prompt;
+        }
         function f() {
         if (frm.topicType.value==answer){
+            window.open('./index?id=' + ([[${question.id}]] + 1), '_self');
             alert("正确");
             return false;
         }else {
@@ -20,6 +25,7 @@
 </head>
 
 <body>
+<div style="margin:0 auto;width:600px" >
 <p th:text="${question.topic}" ></p>
 <form action="" method="post" onsubmit="return  f(this);" th:name="frm">
     <p th:each="i:${answerList}">
@@ -28,6 +34,9 @@
     </p>
     <input th:type="submit" th:value="提交">
 </form>
+<button onclick="ts()">提示</button><br>
+<span id="prompt"></span>
+<br>
 <datalist id="TopicTypeList">
 
 </datalist>
@@ -42,5 +51,6 @@
 </select>
 <button th:onclick="window.open('./index?id=' + ([[${question.id}]] + 1), '_self')">下一题</button>
 <button th:onclick="window.open('./index?id=' + ([[${question.id}]] - 1), '_self')">上一题</button>
+</div>
 </body>
 </html>

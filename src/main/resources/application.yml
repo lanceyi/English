@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 23333
 spring:
   # 数据库连接设置
   datasource:
