@@ -5,52 +5,116 @@
     <title>测验</title>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var answer = [[${question.answer}]];
-        var prompt =[[${question.prompt}]];
-        function ts() {
-            document.getElementById("prompt").innerText=prompt;
+        let id = [[${question.id}]];
+        let answer = [[${question.answer}]];
+        // 初始化
+
+        function point() {
+            let prompt = document.getElementById("prompt")
+            if (prompt.hidden === true){
+                prompt.hidden = false;
+            } else {
+                prompt.hidden = true;
+            }
         }
-        function f() {
-        if (frm.topicType.value==answer){
-            window.open('./index?id=' + ([[${question.id}]] + 1), '_self');
-            alert("正确");
-            return false;
-        }else {
-            alert("错误");
-            return false;
+
+        function judge() {
+            let radiojudge = document.getElementsByName("topicType");
+            for (const key of radiojudge) {
+                let radioLabel = document.getElementsByName('radio' + key.value);
+                for (const e of radioLabel) {
+                    e.style.color = 'black';
+                }
+                if (key.checked) {
+                    for (const e of radioLabel) {
+                        if (e.textContent === answer) {
+                            jump('next')
+                            // key.style.color = '';
+                            for (const e of radioLabel) {
+                                e.style.color = 'chartreuse';
+                            }
+                        } else {
+                            for (const e of radioLabel) {
+                                e.style.color = 'red';
+                            }
+                        }
+                    }
+
+                }
+            }
         }
+        
+        function jump(s) {
+            let ids = id;
+            let rand = document.getElementById('rand');
+            let topicType = document.getElementById('TopicType');
+            let chapter = document.getElementById('chapter');
+            if (s) {
+                if (s === 'next') {
+                    ids++;
+                } else if (s === 'back'){
+                    ids--;
+                }
+            }
+            if (ids < 0) {
+                ids = 0;
+            }
+            let randVal = rand.options[rand.selectedIndex].value;
+            let topicTypeVal = topicType.options[topicType.selectedIndex].value;
+            let chapterVal = chapter.options[chapter.selectedIndex].value;
+            window.open('./index?id=' + ids + '&rand=' + randVal + '&topicType=' + topicTypeVal + '&chapter=' + chapterVal, '_self');
         }
+        function initSelected(select, initVal) {
+            for (let i = 0; i < select.options.length; i++){
+                if (select.options[i].value === initVal){
+                    select.options[i].selected = true;
+                    break;
+                }
+            }
+        }
+        window.onload=function(){
+            let initRandVal = [[${info.rand}]]
+            let initTopicTypeVal = [[${info.topicType}]]
+            let initChapterVal = [[${info.chapter}]]
+            let rand = document.getElementById('rand');
+            let topicType = document.getElementById('TopicType');
+            let chapter = document.getElementById('chapter');
+
+            initSelected(rand, initRandVal);
+            initSelected(topicType, initTopicTypeVal);
+            initSelected(chapter, initChapterVal);
+        };
         /*]]>*/
     </script>
 </head>
 
 <body>
-<div style="margin:0 auto;width:600px" >
-<p th:text="${question.topic}" ></p>
-<form action="" method="post" onsubmit="return  f(this);" th:name="frm">
-    <p th:each="i:${answerList}">
-    <input type="radio" name="topicType"  th:value="${i}"  >
-        <span th:text="${i}"></span>
-    </p>
-    <input th:type="submit" th:value="提交">
-</form>
-<button onclick="ts()">提示</button><br>
-<span id="prompt"></span>
-<br>
-<datalist id="TopicTypeList">
+<div style="margin:0 auto;width:600px">
+    <p th:text="${question.topic}"></p>
+    <span id="prompt" th:text="${question.prompt}" hidden></span>
+    <form action="" method="post">
+        <p th:each="i, var : ${answerList}">
+            <input type="radio" name="topicType" th:value="${var.count}">
+            <label th:name="radio + ${var.count}" th:text="${i}"></label>
+        </p>
+        <input type="button" onclick="judge()" value="提交">
+        <input type="button" onclick="point()" value="提示">
+        <input type="button" onclick="jump('next')" value="下一题">
+        <input  type="button" onclick="jump('back')" value="上一题">
+    </form>
+    <select id="rand" list="randList" onchange="jump()">
+        <option value="false">顺序</option>
+        <option value="true">随机</option>
+    </select>
+    <select id="TopicType" list="TopicTypeList" onchange="jump()">
+        <option value="">无</option>
+        <option th:value="${i}" th:each="i : ${topicTypeList}" th:text="${i}"></option>
+    </select>
+    <select id="chapter" list="chapterList" onchange="jump()">
+        <option value="">无</option>
+        <option th:value="${i}" th:each="i : ${chapterList}" th:text="${i}"></option>
+    </select>
 
-</datalist>
-<select id="rand"  list="randList">
-    <option value="true">随机</option>
-    <option value="false">顺序</option>
-</select>
-<select id="TopicType"  list="TopicTypeList">
-    <option th:value="${i.getTopicType()}" th:each="i : ${topicTypeList}">
-        <span th:text="${i.topicType}"></span>
-    </option>
-</select>
-<button th:onclick="window.open('./index?id=' + ([[${question.id}]] + 1), '_self')">下一题</button>
-<button th:onclick="window.open('./index?id=' + ([[${question.id}]] - 1), '_self')">上一题</button>
 </div>
 </body>
 </html>

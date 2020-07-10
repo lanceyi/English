@@ -3,6 +3,7 @@ package com.lance.entity;
 
 import com.lance.dto.QuestionDto;
 import lombok.Data;
+import net.bytebuddy.implementation.bind.annotation.Empty;
 
 import javax.persistence.*;
 
@@ -41,5 +42,31 @@ public class QuestionEntity {
         this.topic = questionDto.getTopic();
         this.answer = questionDto.getAnswer();
         this.prompt = questionDto.getPrompt();
+    }
+
+    public boolean isEmpty() {
+        boolean result = true;
+        if (this.id != null) {
+            result = false;
+        }
+        if (this.chapter != null && !"".equals(this.chapter)) {
+            result = false;
+        }
+        if (this.topicType != null && !"".equals(this.topicType)) {
+            result = false;
+        }
+        if (this.tag != null && !"".equals(this.tag)) {
+            result = false;
+        }
+        if (this.topic != null && !"".equals(this.topic)) {
+            result = false;
+        }
+        if (this.answer != null && !"".equals(this.answer)) {
+            result = false;
+        }
+        if (this.prompt != null && !"".equals(this.prompt)) {
+            result = false;
+        }
+        return result;
     }
 }

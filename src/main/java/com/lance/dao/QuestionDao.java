@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author youth
@@ -49,26 +50,26 @@ public interface QuestionDao {
     List<QuestionEntity> getAllTopicType();
 
     /**
-     * 获取一个随机题目
-     * @param num 决定查询几个
-     * @return List<QuestionEntity>
+     * 获取所有章节
+     * @return list
      */
-    List<QuestionEntity> getRand(int num);
+    List<QuestionEntity> getAllChapter();
+
 
     /**
-     * 获取随机答案
-     * @param num 决定查询几个
+     * 获取答案
+     * @param id ID
      * @return List<QuestionEntity>
      */
-    List<QuestionEntity> getRandAnswer(int num);
+    QuestionEntity getOneAnswer(@Param("id") long id);
 
     /**
-     * 获取随机答案 根据题型
-     * @param num 决定查询几个
+     * 获取答案 根据题型
+     * @param id ID
      * @param topicType 题型
      * @return List<QuestionEntity>
      */
-    List<QuestionEntity> getRandAnswerInTopicType(@Param("num")int num, @Param("topicType")String topicType);
+    QuestionEntity getOneAnswerInTopicType(@Param("id")Long id, @Param("topicType")String topicType);
 
     /**
      * 获取题目 根据题型
@@ -79,10 +80,25 @@ public interface QuestionDao {
     QuestionEntity getOneInTopicType(@Param("id")Long id, @Param("topicType")String topicType);
 
     /**
-     * 获取随机题目 根据题型
-     * @param sum 决定查询几个
-     * @param topicType 题型
-     * @return
+     * 获取题目 根据章节
+     * @param id ID
+     * @param chapter 章节
+     * @return QuestionEntity
      */
-    List<QuestionEntity> getRandInTopicType(@Param("num")int sum, @Param("topicType")String topicType);
+    QuestionEntity getOneInChapter(@Param("id")Long id, @Param("chapter")String chapter);
+
+    /**
+     * 获取题目 根据 题型、章节
+     * @param id ID
+     * @param topicType 题型
+     * @param chapter 章节
+     * @return QuestionEntity
+     */
+    QuestionEntity getOneInTopicTypeChapter(@Param("id")Long id, @Param("chapter")String chapter, @Param("topicType")String topicType);
+
+    /**
+     * 取最大ID
+     * @return long
+     */
+    List<Integer> getMinAndMaxId(@Param("chapter")String chapter, @Param("topicType")String topicType);
 }
