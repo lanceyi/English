@@ -36,12 +36,12 @@ public class QuestionController {
     }
 
     @GetMapping("/toAdd")
-    public String toAdd(){
+    public String toAdd() {
         return "/control/add";
     }
 
     @GetMapping("/toUpdate")
-    public ModelAndView toUpdate(Long id){
+    public ModelAndView toUpdate(int id) {
         ModelAndView modelAndView = new ModelAndView(CONTROL + "update");
         modelAndView.addObject("question", questionsService.getOne(id));
         return modelAndView;
@@ -70,7 +70,7 @@ public class QuestionController {
 
 
     @GetMapping(value = "/delete")
-    public ModelAndView delete( Long id) {
+    public ModelAndView delete(int id) {
         questionsService.delete(id);
         ModelAndView modelAndView = new ModelAndView(INDEX);
         List<QuestionEntity> list = questionsService.getAll();

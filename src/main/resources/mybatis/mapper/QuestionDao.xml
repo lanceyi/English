@@ -37,7 +37,7 @@
         </where>
     </select>
 
-    <select id="getOne" parameterType="java.lang.Long" resultMap="BaseResultMap" >
+    <select id="getOne" parameterType="Integer" resultMap="BaseResultMap" >
         SELECT
         <include refid="Base_Column_List" />
         FROM "Questions"

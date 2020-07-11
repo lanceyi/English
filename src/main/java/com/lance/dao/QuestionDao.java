@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author youth
@@ -23,7 +22,7 @@ public interface QuestionDao {
      * @param id ID
      * @return QuestionEntity
      */
-    QuestionEntity getOne(Long id);
+    QuestionEntity getOne(int id);
 
     /**
      * 插入数据
@@ -41,7 +40,7 @@ public interface QuestionDao {
      * 删
      * @param id ID
      */
-    void delete(Long id);
+    void delete(int id);
 
     /**
      * 获取所有题型
@@ -61,7 +60,7 @@ public interface QuestionDao {
      * @param id ID
      * @return List<QuestionEntity>
      */
-    QuestionEntity getOneAnswer(@Param("id") long id);
+    QuestionEntity getOneAnswer(@Param("id") int id);
 
     /**
      * 获取答案 根据题型
@@ -69,7 +68,7 @@ public interface QuestionDao {
      * @param topicType 题型
      * @return List<QuestionEntity>
      */
-    QuestionEntity getOneAnswerInTopicType(@Param("id")Long id, @Param("topicType")String topicType);
+    QuestionEntity getOneAnswerInTopicType(@Param("id")int id, @Param("topicType")String topicType);
 
     /**
      * 获取题目 根据题型
@@ -77,7 +76,7 @@ public interface QuestionDao {
      * @param topicType 题型
      * @return QuestionEntity
      */
-    QuestionEntity getOneInTopicType(@Param("id")Long id, @Param("topicType")String topicType);
+    QuestionEntity getOneInTopicType(@Param("id")int id, @Param("topicType")String topicType);
 
     /**
      * 获取题目 根据章节
@@ -85,7 +84,7 @@ public interface QuestionDao {
      * @param chapter 章节
      * @return QuestionEntity
      */
-    QuestionEntity getOneInChapter(@Param("id")Long id, @Param("chapter")String chapter);
+    QuestionEntity getOneInChapter(@Param("id")int id, @Param("chapter")String chapter);
 
     /**
      * 获取题目 根据 题型、章节
@@ -94,11 +93,11 @@ public interface QuestionDao {
      * @param chapter 章节
      * @return QuestionEntity
      */
-    QuestionEntity getOneInTopicTypeChapter(@Param("id")Long id, @Param("chapter")String chapter, @Param("topicType")String topicType);
+    QuestionEntity getOneInTopicTypeChapter(@Param("id")int id, @Param("chapter")String chapter, @Param("topicType")String topicType);
 
     /**
      * 取最大ID
-     * @return long
+     * @return List<Integer>
      */
     List<Integer> getMinAndMaxId(@Param("chapter")String chapter, @Param("topicType")String topicType);
 }

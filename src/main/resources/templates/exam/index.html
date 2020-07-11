@@ -5,21 +5,19 @@
     <title>测验</title>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        let id = [[${question.id}]];
-        let answer = [[${question.answer}]];
+        let ID = [[${question.id}]];
+        let PREVIOUSID = [[${infoId.previousId}]];
+        let NEXTID = [[${infoId.nextId}]];
+        let ANSWER = [[${question.answer}]];
         // 初始化
 
         function point() {
             let prompt = document.getElementById("prompt")
-            if (prompt.hidden === true){
-                prompt.hidden = false;
-            } else {
-                prompt.hidden = true;
-            }
+            prompt.hidden = prompt.hidden !== true;
         }
 
         function judge() {
-            let radiojudge = document.getElementsByName("topicType");
+            let radiojudge = document.getElementsByName("radio");
             for (const key of radiojudge) {
                 let radioLabel = document.getElementsByName('radio' + key.value);
                 for (const e of radioLabel) {
@@ -27,7 +25,7 @@
                 }
                 if (key.checked) {
                     for (const e of radioLabel) {
-                        if (e.textContent === answer) {
+                        if (e.textContent === ANSWER) {
                             jump('next')
                             // key.style.color = '';
                             for (const e of radioLabel) {
@@ -45,19 +43,29 @@
         }
         
         function jump(s) {
-            let ids = id;
-            let rand = document.getElementById('rand');
-            let topicType = document.getElementById('TopicType');
-            let chapter = document.getElementById('chapter');
+            let ids = ID;
+            let previousId = PREVIOUSID;
+            let nextId = NEXTID;
+            let rand = document.getElementById('randList');
+            let topicType = document.getElementById('TopicTypeList');
+            let chapter = document.getElementById('chapterList');
             if (s) {
                 if (s === 'next') {
-                    ids++;
+                    if (previousId !== '') {
+                        ids = nextId;
+                    } else {
+                        ids = ID;
+                    }
                 } else if (s === 'back'){
-                    ids--;
+                    if (nextId !== '') {
+                        ids = previousId;
+                    } else {
+                        ids = ID;
+                    }
                 }
             }
             if (ids < 0) {
-                ids = 0;
+                ids = 1;
             }
             let randVal = rand.options[rand.selectedIndex].value;
             let topicTypeVal = topicType.options[topicType.selectedIndex].value;
@@ -76,9 +84,9 @@
             let initRandVal = [[${info.rand}]]
             let initTopicTypeVal = [[${info.topicType}]]
             let initChapterVal = [[${info.chapter}]]
-            let rand = document.getElementById('rand');
-            let topicType = document.getElementById('TopicType');
-            let chapter = document.getElementById('chapter');
+            let rand = document.getElementById('randList');
+            let topicType = document.getElementById('TopicTypeList');
+            let chapter = document.getElementById('chapterList');
 
             initSelected(rand, initRandVal);
             initSelected(topicType, initTopicTypeVal);
@@ -94,23 +102,26 @@
     <span id="prompt" th:text="${question.prompt}" hidden></span>
     <form action="" method="post">
         <p th:each="i, var : ${answerList}">
-            <input type="radio" name="topicType" th:value="${var.count}">
-            <label th:name="radio + ${var.count}" th:text="${i}"></label>
+            <input type="radio" th:id="radio + ${var.count}" name="radio" th:value="${var.count}">
+            <label th:name="radio + ${var.count}" th:for="radio+ ${var.count}" th:text="${i}"></label>
         </p>
         <input type="button" onclick="judge()" value="提交">
         <input type="button" onclick="point()" value="提示">
         <input type="button" onclick="jump('next')" value="下一题">
         <input  type="button" onclick="jump('back')" value="上一题">
     </form>
-    <select id="rand" list="randList" onchange="jump()">
+    <label for="randList">顺序：</label>
+    <select id="randList" name="randList" onchange="jump()">
         <option value="false">顺序</option>
         <option value="true">随机</option>
     </select>
-    <select id="TopicType" list="TopicTypeList" onchange="jump()">
+    <label for="TopicTypeList">题型：</label>
+    <select id="TopicTypeList" name="TopicTypeList" onchange="jump()">
         <option value="">无</option>
         <option th:value="${i}" th:each="i : ${topicTypeList}" th:text="${i}"></option>
     </select>
-    <select id="chapter" list="chapterList" onchange="jump()">
+    <label for="chapterList">章节：</label>
+    <select id="chapterList" name="chapterList" onchange="jump()">
         <option value="">无</option>
         <option th:value="${i}" th:each="i : ${chapterList}" th:text="${i}"></option>
     </select>

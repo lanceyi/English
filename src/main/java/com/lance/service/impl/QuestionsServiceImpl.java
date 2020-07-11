@@ -26,7 +26,7 @@ public class QuestionsServiceImpl implements QuestionsService {
     }
 
     @Override
-    public QuestionEntity getOne(long id) {
+    public QuestionEntity getOne(int id) {
         return questionDao.getOne(id);
     }
 
@@ -42,31 +42,16 @@ public class QuestionsServiceImpl implements QuestionsService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(int id) {
         questionDao.delete(id);
     }
 
-    @Override
-    public List<QuestionEntity> getRand(int num) {
-        List<QuestionEntity> list = new LinkedList<>();
-        for (int i = 0; i < num; i++) {
-            QuestionEntity temp = new QuestionEntity();
-            while (temp.isEmpty()) {
-                temp = questionDao.getOne(getRandId());
-            }
-            list.add(temp);
+    public QuestionEntity getRand() {
+        QuestionEntity temp = new QuestionEntity();
+        while (temp.isEmpty()) {
+            temp = questionDao.getOne(getRandId());
         }
-        return list;
-    }
-
-    @Override
-    public List<QuestionEntity> getAllTopicType() {
-        return questionDao.getAllTopicType();
-    }
-
-    @Override
-    public List<QuestionEntity> getAllChapter() {
-        return questionDao.getAllChapter();
+        return temp;
     }
 
     @Override
@@ -75,7 +60,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         for (int i = 0; i < num; i++) {
             QuestionEntity temp = new QuestionEntity();
             while (temp.isEmpty()) {
-                long id = getRandId("", topicType);
+                int id = getRandId("", topicType);
                 temp = questionDao.getOneAnswerInTopicType(id, topicType);
                 while (temp == null) {
                     temp = questionDao.getOneAnswerInTopicType(id, topicType);
@@ -94,100 +79,32 @@ public class QuestionsServiceImpl implements QuestionsService {
         return list;
     }
 
-    @Override
-    public QuestionEntity getOneInTopicType(Long id, String topicType) {
-        return questionDao.getOneInTopicType(id, topicType);
-    }
-
-    @Override
-    public QuestionEntity getOneInChapter(Long id, String chapter) {
-        return questionDao.getOneInTopicType(id, chapter);
-    }
-
-    @Override
-    public QuestionEntity getOneInTopicTypeChapter(Long id, String topicType, String chapter) {
-        return questionDao.getOneInTopicTypeChapter(id, topicType, chapter);
-    }
-
-    @Override
-    public List<QuestionEntity> getRandInChapter(int num, String chapter) {
-        List<QuestionEntity> list = new LinkedList<>();
-        for (int i = 0; i < num; i++) {
-            QuestionEntity temp = new QuestionEntity();
-            while (temp.isEmpty()) {
-                temp = questionDao.getOne(getRandId(chapter, ""));
-            }
-            list.add(temp);
+    public QuestionEntity getRandInTopicTypeChapter(String topicType, String chapter) {
+        QuestionEntity temp = new QuestionEntity();
+        while (temp.isEmpty()) {
+            temp = questionDao.getOne(getRandId(chapter, topicType));
         }
-        return list;
+        return temp;
     }
 
     @Override
-    public List<QuestionEntity> getRandInTopicTypeChapter(int num, String topicType, String chapter) {
-        List<QuestionEntity> list = new LinkedList<>();
-        for (int i = 0; i < num; i++) {
-            QuestionEntity temp = new QuestionEntity();
-            while (temp.isEmpty()) {
-                temp = questionDao.getOne(getRandId(chapter, topicType));
-            }
-            list.add(temp);
+    public QuestionEntity getRandInTopicType(String topicType) {
+        QuestionEntity temp = new QuestionEntity();
+        while (temp.isEmpty()) {
+            temp = questionDao.getOne(getRandId("", topicType));
         }
-        return list;
+        return temp;
     }
 
     @Override
-    public List<QuestionEntity> getRandInTopicType(int num, String topicType) {
-        List<QuestionEntity> list = new LinkedList<>();
-        for (int i = 0; i < num; i++) {
-            QuestionEntity temp = new QuestionEntity();
-            while (temp.isEmpty()) {
-                temp = questionDao.getOne(getRandId("", topicType));
-            }
-            list.add(temp);
-        }
-        return list;
-    }
-
-    @Override
-    public List<QuestionEntity> getQuestion(Long id, int num, boolean rand, String topicType, String chapter) {
-        List<QuestionEntity> list = new LinkedList<>();
+    public Map<String, QuestionEntity> getQuestion(int id, boolean rand, String topicType, String chapter) {
+        Map<String, QuestionEntity> map;
         if (rand) {
-            if (num == 0) {
-                return list;
-            }
-            if ("".equals(topicType) && "".equals(chapter)) {
-                list = getRand(num);
-            }
-            // 题型有数据时
-            else if (!"".equals(topicType) && "".equals(chapter)) {
-                list = getRandInTopicType(num, topicType);
-            }
-            // 章节有数据时
-            else if ("".equals(topicType)) {
-                list = getRandInTopicType(num, topicType);
-            }
-            // 章节和题型有数据时
-            else {
-                list = getRandInTopicTypeChapter(num, topicType, chapter);
-            }
+            map = getQuestionRand(topicType, chapter);
         } else {
-            if ("".equals(topicType) && "".equals(chapter)) {
-                list.add(questionDao.getOne(id));
-            }
-            // 题型有数据时
-            else if (!"".equals(topicType) && "".equals(chapter)) {
-                list.add(questionDao.getOneInTopicType(id, topicType));
-            }
-            // 章节有数据时
-            else if ("".equals(topicType)) {
-                list.add(questionDao.getOneInChapter(id, chapter));
-            }
-            // 章节和题型有数据时
-            else {
-                list.add(questionDao.getOneInTopicTypeChapter(id, topicType, chapter));
-            }
+            map = getQuestionSequence(id, topicType, chapter);
         }
-        return list;
+        return map;
     }
 
     @Override
@@ -210,26 +127,115 @@ public class QuestionsServiceImpl implements QuestionsService {
             }
         }
         // 将list的 Answer 取出并转换成List<String>
-        List<String> Slist = list.stream().map(QuestionEntity::getAnswer).collect(Collectors.toList());
+        List<String> listS = list.stream().map(QuestionEntity::getAnswer).collect(Collectors.toList());
         // 添加正确答案进去
-        Slist.add(questionEntity.getAnswer());
+        listS.add(questionEntity.getAnswer());
         // 打乱
-        Collections.shuffle(Slist);
-        return Slist;
+        Collections.shuffle(listS);
+        return listS;
     }
 
-    public long getRandId(String chapter, String topicType) {
+    public int getRandId(String chapter, String topicType) {
         List<Integer> result = questionDao.getMinAndMaxId(chapter, topicType);
         int min = 0;
         int max = result.size() - 1;
         int randomNum = new Random().nextInt((max + 1 - min)) + min;
         return result.get(randomNum);
     }
-    public long getRandId() {
+
+    public int getRandId() {
         List<Integer> result = questionDao.getMinAndMaxId("", "");
         int min = 0;
         int max = result.size() - 1;
         int randomNum = new Random().nextInt((max + 1 - min)) + min;
         return result.get(randomNum);
+    }
+
+    public Map<String, QuestionEntity> mapQuestionPacker(QuestionEntity previous, QuestionEntity question, QuestionEntity next) {
+        Map<String, QuestionEntity> map = new HashMap<>(3);
+        map.put("previous", previous);
+        map.put("question", question);
+        map.put("next", next);
+        return map;
+    }
+
+    public List<Integer> getIdList(String chapter, String topicType) {
+        return questionDao.getMinAndMaxId(chapter, topicType);
+    }
+
+    public Map<String, QuestionEntity> getQuestionRand(String topicType, String chapter) {
+        Map<String, QuestionEntity> map;
+        QuestionEntity previous = new QuestionEntity();
+        QuestionEntity questionEntity;
+        QuestionEntity next = new QuestionEntity();
+        if ("".equals(topicType) && "".equals(chapter)) {
+            questionEntity = getRand();
+        }
+        // 题型有数据时
+        else if (!"".equals(topicType) && "".equals(chapter)) {
+            questionEntity = getRandInTopicType(topicType);
+        }
+        // 章节有数据时
+        else if ("".equals(topicType)) {
+            questionEntity = getRandInTopicType(topicType);
+        }
+        // 章节和题型有数据时
+        else {
+            questionEntity = getRandInTopicTypeChapter(topicType, chapter);
+        }
+        map = mapQuestionPacker(previous, questionEntity, next);
+        return map;
+    }
+
+    public Map<String, QuestionEntity> getQuestionByIdList(int id, List<Integer> idList) {
+        Map<String, QuestionEntity> map;
+        QuestionEntity previous;
+        QuestionEntity questionEntity;
+        QuestionEntity next;
+
+        int idi = idList.lastIndexOf(id);
+        if (idi != -1) {
+            previous = questionDao.getOne(id - 1);
+            questionEntity = questionDao.getOne(id);
+            next = questionDao.getOne(id + 1);
+        } else {
+            int tempId = idList.get(0);
+            previous = questionDao.getOne(tempId - 1);
+            questionEntity = questionDao.getOne(tempId);
+            next = questionDao.getOne(tempId + 1);
+        }
+        map = mapQuestionPacker(previous, questionEntity, next);
+        return map;
+    }
+
+    public Map<String, QuestionEntity> getQuestionSequence(int id, String topicType, String chapter) {
+        Map<String, QuestionEntity> map;
+        QuestionEntity previous;
+        QuestionEntity questionEntity;
+        QuestionEntity next;
+
+        if ("".equals(topicType) && "".equals(chapter)) {
+            previous = questionDao.getOne(id - 1);
+            questionEntity = questionDao.getOne(id);
+            next = questionDao.getOne(id + 1);
+            map = mapQuestionPacker(previous, questionEntity, next);
+        }
+        // 题型有数据时
+        else if (!"".equals(topicType) && "".equals(chapter)) {
+            List<Integer> idList = getIdList("", topicType);
+            map = getQuestionByIdList(id, idList);
+        }
+        // 章节有数据时
+        else if ("".equals(topicType)) {
+            List<Integer> idList = getIdList(chapter, "");
+            map = getQuestionByIdList(id, idList);
+        }
+        // 章节和题型有数据时
+        else {
+            List<Integer> idList = getIdList(chapter, topicType);
+            map = getQuestionByIdList(id, idList);
+        }
+
+        return map;
     }
 }

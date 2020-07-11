@@ -1,10 +1,10 @@
 package com.lance.service;
 
 import com.lance.entity.QuestionEntity;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author youth
@@ -23,7 +23,7 @@ public interface QuestionsService {
      * @param id ID
      * @return QuestionEntity
      */
-    QuestionEntity getOne(long id);
+    QuestionEntity getOne(int id);
 
     /**
      * 添加数据
@@ -41,26 +41,7 @@ public interface QuestionsService {
      * 删除数据
      * @param id ID
      */
-    void delete(Long id);
-
-    /**
-     * 获取题目 随机
-     * @param num 决定获取几个
-     * @return List<QuestionEntity>
-     */
-    List<QuestionEntity> getRand(int num);
-
-    /**
-     * 获取所有题型
-     * @return List<QuestionEntity>
-     */
-    List<QuestionEntity> getAllTopicType();
-
-    /**
-     * 获取所有章节
-     * @return List<QuestionEntity>
-     */
-    List<QuestionEntity> getAllChapter();
+    void delete(int id);
 
     /**
      * 根据题型 获取随机答案
@@ -71,65 +52,21 @@ public interface QuestionsService {
     List<QuestionEntity> getRandAnswerInTopicType(int num, String topicType);
 
     /**
-     * 获取题目 根据题型
-     * @param id ID
-     * @param topicType 题型
-     * @return QuestionEntity
-     */
-    QuestionEntity getOneInTopicType(Long id, String topicType);
-
-    /**
-     * 获取题目 根据章节
-     * @param id ID
-     * @param chapter 章节
-     * @return QuestionEntity
-     */
-    QuestionEntity getOneInChapter(Long id, String chapter);
-
-    /**
-     * 获取题目 根据题型、章节
-     * @param id ID
-     * @param topicType 题型
-     * @param chapter 章节
-     * @return QuestionEntity
-     */
-    QuestionEntity getOneInTopicTypeChapter(Long id, String topicType, String chapter);
-
-    /**
      * 获取随机题目 根据题型
-     * @param num 决定查询几个
      * @param topicType 题型
-     * @return
-     */
-    List<QuestionEntity> getRandInTopicType(int num, String topicType);
-
-    /**
-     * 获取随机题目 根据章节
-     * @param num 决定查询几个
-     * @param chapter 章节
      * @return QuestionEntity
      */
-    List<QuestionEntity> getRandInChapter(int num, String chapter);
-
-    /**
-     * 获取随机题目 根据题型、章节
-     * @param num 决定查询几个
-     * @param topicType 题型
-     * @param chapter 章节
-     * @return QuestionEntity
-     */
-    List<QuestionEntity> getRandInTopicTypeChapter(int num, String topicType, String chapter);
+    QuestionEntity getRandInTopicType(String topicType);
 
     /**
      * 获取题目
      * @param id ID
-     * @param num 决定查询几个
      * @param rand 是否随机
      * @param topicType 题型
      * @param chapter 章节
      * @return QuestionEntity
      */
-    List<QuestionEntity> getQuestion(Long id, int num, boolean rand, String topicType, String chapter);
+    Map<String, QuestionEntity> getQuestion(int id, boolean rand, String topicType, String chapter);
 
 
     /**

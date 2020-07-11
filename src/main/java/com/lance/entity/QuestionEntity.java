@@ -3,7 +3,6 @@ package com.lance.entity;
 
 import com.lance.dto.QuestionDto;
 import lombok.Data;
-import net.bytebuddy.implementation.bind.annotation.Empty;
 
 import javax.persistence.*;
 
